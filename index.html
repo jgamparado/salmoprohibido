@@ -381,29 +381,29 @@
       text-align: center;
     }
     .bridge-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--dark);
-      line-height: 1.55;
-      margin-bottom: 20px;
+      line-height: 1.45;
+      margin-bottom: 12px;
     }
     .bridge-title u {
       text-decoration-color: var(--gold);
-      text-underline-offset: 4px;
+      text-underline-offset: 3px;
     }
     .bridge-divider {
-      width: 48px;
+      width: 40px;
       height: 3px;
       background: linear-gradient(90deg, var(--gold), var(--gold-lt));
       border-radius: 2px;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
     .bridge-body {
-      font-size: 15px;
+      font-size: 13.5px;
       font-weight: 500;
       color: var(--dark);
-      line-height: 1.8;
-      margin-bottom: 16px;
+      line-height: 1.65;
+      margin-bottom: 10px;
       text-align: center;
     }
     .bridge-body strong {
@@ -412,9 +412,13 @@
     }
     .bridge-bold {
       font-weight: 800;
-      font-size: 16px;
+      font-size: 14px;
       margin-bottom: 0;
     }
+
+    /* Bridge: reduz padding da página para caber na tela */
+    #step-6.active ~ * { padding: 0; }
+    .page:has(#step-6.active) { padding-top: 20px; padding-bottom: 20px; }
 
     /* ── Desktop ── */
     @media (min-width: 600px) {
@@ -504,7 +508,7 @@
       <p class="bridge-body">En función de sus respuestas, <strong>las palabras del salmo se ajustan exactamente a su deseo y a su bloqueo principal,</strong> creando una oración personalizada que actúa directamente en su realidad financiera.</p>
       <p class="bridge-body">El secreto es que con las frecuencias correctas activadas, <strong>la prosperidad fluye de manera natural y armoniosa</strong> y dejar de luchar contra el dinero se convierte en cuestión de días.</p>
       <p class="bridge-body bridge-bold">Por eso este método funciona tan bien.</p>
-      <button class="btn" style="margin-top:32px" onclick="goTo(7)">Continuar</button>
+      <button class="btn" style="margin-top:16px" onclick="goTo(7)">Continuar</button>
     </div>
   </div>
 
