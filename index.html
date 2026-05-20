@@ -374,23 +374,45 @@
     .btn-final:active { transform: scale(0.98); }
 
     /* ── Bridge page ── */
+    .bridge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
     .bridge-title {
       font-size: 18px;
       font-weight: 800;
       color: var(--dark);
-      text-align: center;
-      line-height: 1.5;
-      margin-bottom: 28px;
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+    .bridge-title u {
+      text-decoration-color: var(--gold);
+      text-underline-offset: 4px;
+    }
+    .bridge-divider {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      border-radius: 2px;
+      margin-bottom: 24px;
     }
     .bridge-body {
       font-size: 15px;
       font-weight: 500;
       color: var(--dark);
-      line-height: 1.75;
+      line-height: 1.8;
       margin-bottom: 16px;
+      text-align: center;
+    }
+    .bridge-body strong {
+      font-weight: 800;
+      color: var(--dark);
     }
     .bridge-bold {
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 16px;
       margin-bottom: 0;
     }
 
@@ -473,14 +495,17 @@
 
   <!-- ══ STEP 6 — Bridge Page ══ -->
   <div class="step" id="step-6">
-    <p class="bridge-title">Antes de continuar, vea por qué usted nunca ha podido tener dinero de verdad.</p>
-    <p class="bridge-body">Cada persona tiene un bloqueo espiritual único con el dinero y, por eso, debemos entender exactamente cómo funciona el suyo.</p>
-    <p class="bridge-body">Nuestro objetivo es identificar con precisión en qué punto su energía financiera está bloqueada para que las palabras del salmo puedan actuar directamente sobre eso.</p>
-    <p class="bridge-body">El problema de la mayoría de las personas que no pueden prosperar es que intentan métodos genéricos como la Ley de la Atracción y el pensamiento positivo sin saber que cada bloqueo necesita una frecuencia específica para ser disuelto.</p>
-    <p class="bridge-body">En función de sus respuestas, las palabras del salmo se ajustan exactamente a su deseo y a su bloqueo principal, creando una oración personalizada que actúa directamente en su realidad financiera.</p>
-    <p class="bridge-body">El secreto es que con las frecuencias correctas activadas, la prosperidad fluye de manera natural y armoniosa y dejar de luchar contra el dinero se convierte en cuestión de días.</p>
-    <p class="bridge-body bridge-bold">Por eso este método funciona tan bien.</p>
-    <button class="btn" style="margin-top:28px" onclick="goTo(7)">Continuar</button>
+    <div class="bridge-wrap">
+      <p class="bridge-title">Antes de continuar, vea por qué usted <u>nunca ha podido tener dinero de verdad.</u></p>
+      <div class="bridge-divider"></div>
+      <p class="bridge-body">Cada persona tiene un <strong>bloqueo espiritual único con el dinero</strong> y, por eso, debemos entender exactamente cómo funciona el suyo.</p>
+      <p class="bridge-body">Nuestro objetivo es identificar con precisión <strong>en qué punto su energía financiera está bloqueada</strong> para que las palabras del salmo puedan actuar directamente sobre eso.</p>
+      <p class="bridge-body">El problema de la mayoría de las personas que no pueden prosperar es que intentan métodos genéricos como la Ley de la Atracción y el pensamiento positivo <strong>sin saber que cada bloqueo necesita una frecuencia específica para ser disuelto.</strong></p>
+      <p class="bridge-body">En función de sus respuestas, <strong>las palabras del salmo se ajustan exactamente a su deseo y a su bloqueo principal,</strong> creando una oración personalizada que actúa directamente en su realidad financiera.</p>
+      <p class="bridge-body">El secreto es que con las frecuencias correctas activadas, <strong>la prosperidad fluye de manera natural y armoniosa</strong> y dejar de luchar contra el dinero se convierte en cuestión de días.</p>
+      <p class="bridge-body bridge-bold">Por eso este método funciona tan bien.</p>
+      <button class="btn" style="margin-top:32px" onclick="goTo(7)">Continuar</button>
+    </div>
   </div>
 
   <!-- ══ STEP 7 — Transição: Frequências ══ -->
