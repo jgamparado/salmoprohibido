@@ -373,6 +373,27 @@
     .btn-final:hover  { opacity: .92; box-shadow: 0 12px 40px rgba(200,155,26,.55); }
     .btn-final:active { transform: scale(0.98); }
 
+    /* ── Bridge page ── */
+    .bridge-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--dark);
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+    .bridge-body {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--dark);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .bridge-bold {
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
     /* ── Desktop ── */
     @media (min-width: 600px) {
       .q-title   { font-size: 18px; }
@@ -450,8 +471,20 @@
     <button class="opt" onclick="pickOpt(this,6)">Nunca</button>
   </div>
 
-  <!-- ══ STEP 6 — Transição: Frequências ══ -->
+  <!-- ══ STEP 6 — Bridge Page ══ -->
   <div class="step" id="step-6">
+    <p class="bridge-title">Antes de continuar, vea por qué usted nunca ha podido tener dinero de verdad.</p>
+    <p class="bridge-body">Cada persona tiene un bloqueo espiritual único con el dinero y, por eso, debemos entender exactamente cómo funciona el suyo.</p>
+    <p class="bridge-body">Nuestro objetivo es identificar con precisión en qué punto su energía financiera está bloqueada para que las palabras del salmo puedan actuar directamente sobre eso.</p>
+    <p class="bridge-body">El problema de la mayoría de las personas que no pueden prosperar es que intentan métodos genéricos como la Ley de la Atracción y el pensamiento positivo sin saber que cada bloqueo necesita una frecuencia específica para ser disuelto.</p>
+    <p class="bridge-body">En función de sus respuestas, las palabras del salmo se ajustan exactamente a su deseo y a su bloqueo principal, creando una oración personalizada que actúa directamente en su realidad financiera.</p>
+    <p class="bridge-body">El secreto es que con las frecuencias correctas activadas, la prosperidad fluye de manera natural y armoniosa y dejar de luchar contra el dinero se convierte en cuestión de días.</p>
+    <p class="bridge-body bridge-bold">Por eso este método funciona tan bien.</p>
+    <button class="btn" style="margin-top:28px" onclick="goTo(7)">Continuar</button>
+  </div>
+
+  <!-- ══ STEP 7 — Transição: Frequências ══ -->
+  <div class="step" id="step-7">
     <div class="trans-step-inner">
       <div class="trans-img-wrap">
         <img src="imgs/frecuencias.png" alt="" onerror="this.style.display='none'">
@@ -461,13 +494,13 @@
       </p>
       <div class="trans-spacer"></div>
       <div class="trans-btn-area">
-        <button class="btn" onclick="goTo(7)">Seguir</button>
+        <button class="btn" onclick="goTo(8)">Seguir</button>
       </div>
     </div>
   </div>
 
   <!-- ══ STEP 7 — Pensamentos sobre dinheiro ══ -->
-  <div class="step" id="step-7">
+  <div class="step" id="step-8">
     <p class="q-title">Cuando pienso en tener mucho dinero, yo…</p>
     <button class="opt" onclick="pickOpt(this,8)"><span class="opt-emoji">😐</span>Siento que no lo merezco o que no soy capaz</button>
     <button class="opt" onclick="pickOpt(this,8)"><span class="opt-emoji">😤</span>Me pongo ansioso(a) y tengo miedo de perderlo</button>
@@ -476,7 +509,7 @@
   </div>
 
   <!-- ══ STEP 8 — Transição: Bloqueio ══ -->
-  <div class="step" id="step-8">
+  <div class="step" id="step-9">
     <div class="trans-step-inner">
       <div class="alert-red">¡Tu respuesta revela tu bloqueo principal!</div>
       <div class="trans-img-wrap">
@@ -484,13 +517,13 @@
       </div>
       <div class="trans-spacer"></div>
       <div class="trans-btn-area">
-        <button class="btn" onclick="goTo(9)">Seguir</button>
+        <button class="btn" onclick="goTo(10)">Seguir</button>
       </div>
     </div>
   </div>
 
   <!-- ══ STEP 9 — Salmo proibido ══ -->
-  <div class="step" id="step-9">
+  <div class="step" id="step-10">
     <p class="q-title">¿Y si te dijera que una oración del salmo prohibido puede cambiar tu realidad financiera en 40 días? Tú…</p>
     <button class="opt" onclick="pickOpt(this,10)"><span class="opt-emoji">😁</span>La intentarías de inmediato</button>
     <button class="opt" onclick="pickOpt(this,10)"><span class="opt-emoji">😏</span>Sentirías mucha curiosidad por saber más</button>
@@ -498,7 +531,7 @@
   </div>
 
   <!-- ══ STEP 10 — Maior desejo ══ -->
-  <div class="step" id="step-10">
+  <div class="step" id="step-11">
     <p class="q-title">¿Cuál es tu mayor deseo en este momento?</p>
     <button class="opt" onclick="pickOpt(this,11)">Pagar todas mis deudas</button>
     <button class="opt" onclick="pickOpt(this,11)">Tener un fondo de emergencia</button>
@@ -507,7 +540,7 @@
   </div>
 
   <!-- ══ STEP 11 — Transição: Palavras ══ -->
-  <div class="step" id="step-11">
+  <div class="step" id="step-12">
     <div class="trans-step-inner">
       <div class="trans-img-wrap">
         <img src="imgs/palabras.png" alt="" onerror="this.style.display='none'">
@@ -517,13 +550,13 @@
       </p>
       <div class="trans-spacer"></div>
       <div class="trans-btn-area">
-        <button class="btn" onclick="goTo(12)">Seguir</button>
+        <button class="btn" onclick="goTo(13)">Seguir</button>
       </div>
     </div>
   </div>
 
   <!-- ══ STEP 12 — Seleção múltipla ══ -->
-  <div class="step" id="step-12">
+  <div class="step" id="step-13">
     <p class="q-title">Marca lo que más deseas manifestar en los próximos 30 días:</p>
     <p style="color:var(--mid);font-size:13px;font-weight:600;text-align:center;margin-bottom:16px">(Selección múltiple)</p>
     <div class="multi-grid">
@@ -544,11 +577,11 @@
       <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Manifestación de deseos</span></div>
       <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Paciencia</span></div>
     </div>
-    <button class="btn" onclick="goTo(13)">Seguir</button>
+    <button class="btn" onclick="goTo(14)">Seguir</button>
   </div>
 
   <!-- ══ STEP 13 — Compromisso ══ -->
-  <div class="step" id="step-13">
+  <div class="step" id="step-14">
     <p class="warning">
       <span class="warning-label">Aviso:</span> las palabras tienen conciencia propia; pueden volverse contra quien las utiliza con mala intención.
     </p>
@@ -556,18 +589,18 @@
       <img src="imgs/pergamino.png" alt="" onerror="this.style.display='none'">
     </div>
     <p class="q-title">¿Te comprometes a usar este poder únicamente con propósitos nobles?</p>
-    <button class="opt-arrow" onclick="goTo(14)">
+    <button class="opt-arrow" onclick="goTo(15)">
       <span>🙏 Sí, me comprometo completamente</span>
       <span class="arrow-icon">›</span>
     </button>
-    <button class="opt-arrow" onclick="goTo(14)">
+    <button class="opt-arrow" onclick="goTo(15)">
       <span>✋✋ No puedo garantizarlo</span>
       <span class="arrow-icon">›</span>
     </button>
   </div>
 
   <!-- ══ STEP 14 — CTA final ══ -->
-  <div class="step" id="step-14">
+  <div class="step" id="step-15">
     <div class="final-wrap">
       <div class="final-icon">✨</div>
       <p class="final-title">Tus respuestas han sido analizadas</p>
