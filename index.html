@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Prueba de la Prosperidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Paleta ── */
+    :root {
+      --bg:        #F4E8D0;
+      --bg2:       #EDD9B4;
+      --dark:      #2C1507;
+      --mid:       #7A5028;
+      --border:    #C9A96E;
+      --gold:      #C89B1A;
+      --gold-lt:   #F0C030;
+      --opt-bg:    rgba(255,255,255,0.65);
+      --opt-hover: rgba(200,155,26,.10);
+      --opt-pick:  rgba(200,155,26,.18);
+      --shadow:    rgba(44,21,7,.10);
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: var(--dark);
+    }
+
+    /* ── Grain texture ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 1;
+    }
+
+    /* ── Layout ── */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 430px;
+      position: relative;
+    }
+
+    /* ── Steps: fade in/out ── */
+    .step {
+      display: none;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .step.active  { display: flex; opacity: 0; }
+    .step.visible { opacity: 1; }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .progress-track {
+      flex: 1;
+      height: 7px;
+      background: var(--bg2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      border-radius: 4px;
+      transition: width .45s ease;
+    }
+    .progress-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+      letter-spacing: .3px;
+    }
+
+    /* ── Typography ── */
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      color: var(--mid);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .q-title {
+      font-size: 17px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      color: var(--dark);
+    }
+    .q-quote {
+      font-size: 16px;
+      font-weight: 600;
+      font-style: italic;
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      color: var(--mid);
+    }
+    .highlight {
+      background: var(--gold);
+      color: #fff;
+      padding: 2px 9px;
+      border-radius: 5px;
+      font-weight: 800;
+    }
+    .gold { color: var(--gold); font-weight: 700; }
+
+    /* ── Option buttons ── */
+    .opt {
+      background: var(--opt-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      color: var(--dark);
+      font-size: 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      padding: 15px 16px;
+      margin-bottom: 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color .15s, background .15s, box-shadow .15s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      line-height: 1.45;
+      width: 100%;
+      box-shadow: 0 2px 6px var(--shadow);
+    }
+    .opt:hover  { border-color: var(--gold); background: var(--opt-hover); box-shadow: 0 4px 12px var(--shadow); }
+    .opt:active { transform: scale(0.98); }
+    .opt.picked { border-color: var(--gold); background: var(--opt-pick); box-shadow: 0 4px 14px rgba(200,155,26,.2); }
+    .opt-emoji  { font-size: 20px; flex-shrink: 0; }
+
+    /* ── Opção com seta ── */
+    .opt-arrow {
+      background: var(--opt-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      color: var(--dark);
+      font-size: 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      padding: 17px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s, box-shadow .15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      box-shadow: 0 2px 6px var(--shadow);
+    }
+    .opt-arrow:hover  { border-color: var(--gold); background: var(--opt-hover); }
+    .opt-arrow:active { transform: scale(0.98); }
+    .arrow-icon { color: var(--border); font-size: 22px; }
+
+    /* ── Botão principal ── */
+    .btn {
+      background: linear-gradient(135deg, var(--gold), #d4a820);
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      font-family: 'Montserrat', sans-serif;
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: opacity .15s, box-shadow .15s;
+      width: 100%;
+      box-shadow: 0 6px 20px rgba(200,155,26,.35);
+      letter-spacing: .3px;
+    }
+    .btn:hover  { opacity: .92; box-shadow: 0 8px 26px rgba(200,155,26,.45); }
+    .btn:active { transform: scale(0.98); }
+
+    /* ── Gender cards ── */
+    .gender-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .gender-card {
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .15s, box-shadow .15s, transform .15s;
+      background: #2C1507;
+      box-shadow: 0 4px 14px var(--shadow);
+    }
+    .gender-card:hover  { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(200,155,26,.25); }
+    .gender-card:active { transform: scale(0.98); }
+    .gender-card.picked { border-color: var(--gold); box-shadow: 0 8px 26px rgba(200,155,26,.35); }
+    .gender-img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      background: linear-gradient(160deg, #3a1a06, #5c2e12);
+      overflow: hidden;
+    }
+    .gender-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gender-label {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px;
+      text-align: center;
+    }
+
+    /* ── Imagem de transição (retrato) ── */
+    .trans-img-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(150deg, #3e1e08, #5c2e12);
+      margin-bottom: 22px;
+      box-shadow: 0 8px 30px var(--shadow);
+    }
+    .trans-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .trans-text {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.65;
+      color: var(--dark);
+      margin-bottom: 0;
+    }
+
+    .trans-step-inner { display: flex; flex-direction: column; }
+    .trans-spacer { display: none; }
+    .trans-btn-area { padding-top: 20px; }
+
+    /* ── Banner vermelho ── */
+    .alert-red {
+      background: #C91F1F;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 14px 16px;
+      text-align: center;
+      margin-bottom: 18px;
+      letter-spacing: .2px;
+      box-shadow: 0 4px 16px rgba(201,31,31,.3);
+    }
+
+    /* ── Aviso ── */
+    .warning {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.65;
+      margin-bottom: 16px;
+      color: var(--dark);
+      background: rgba(200,155,26,.1);
+      border-left: 3px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 0 10px 10px 0;
+    }
+    .warning-label { color: var(--gold); font-weight: 800; }
+
+    /* ── Seleção múltipla ── */
+    .multi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+    .chk {
+      border: 1.5px solid var(--border);
+      border-radius: 11px;
+      padding: 10px 9px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--opt-bg);
+      box-shadow: 0 1px 4px var(--shadow);
+    }
+    .chk:hover  { border-color: var(--gold); }
+    .chk:active { transform: scale(0.97); }
+    .chk.on     { border-color: var(--gold); background: var(--opt-pick); }
+    .chk-box {
+      width: 19px; height: 19px;
+      border: 2px solid var(--border);
+      border-radius: 5px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+    .chk.on .chk-box { background: var(--gold); border-color: var(--gold); }
+    .chk-mark { color: #fff; font-size: 12px; font-weight: 800; display: none; }
+    .chk.on .chk-mark { display: block; }
+    .chk-lbl  { color: var(--dark); font-size: 13px; font-weight: 600; line-height: 1.3; }
+
+    /* ── Intro (step 1) ── */
+    .intro-head { text-align: center; margin-bottom: 28px; }
+    .intro-main { font-size: 19px; font-weight: 800; line-height: 1.5; color: var(--dark); }
+
+    /* ── Step 14 — CTA final ── */
+    .final-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+    .final-icon { font-size: 52px; margin-bottom: 16px; }
+    .final-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .final-sub {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--mid);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .final-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 28px;
+    }
+    .btn-final {
+      background: linear-gradient(135deg, var(--gold), #d4a820);
+      border: none;
+      border-radius: 16px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 800;
+      font-family: 'Montserrat', sans-serif;
+      padding: 22px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: opacity .15s, box-shadow .15s;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(200,155,26,.45);
+      letter-spacing: .3px;
+    }
+    .btn-final:hover  { opacity: .92; box-shadow: 0 12px 40px rgba(200,155,26,.55); }
+    .btn-final:active { transform: scale(0.98); }
+
+    /* ── Desktop ── */
+    @media (min-width: 600px) {
+      .q-title   { font-size: 18px; }
+      .opt       { font-size: 16px; padding: 16px 18px; }
+      .btn       { font-size: 17px; padding: 20px; }
+      .btn-final { font-size: 18px; padding: 24px 20px; }
+      .chk-lbl   { font-size: 14px; }
+      .final-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<div class="content">
+
+  <!-- ══ STEP 1 — Gênero ══ -->
+  <div class="step active" id="step-1">
+    <div class="intro-head">
+      <p class="intro-main">
+        ¡Felicidades! Ya tienes acceso a la prueba del
+        <span class="highlight">la prosperidad</span>
+      </p>
+    </div>
+    <p class="q-title" style="margin-bottom:22px">Las palabras necesitan saber: tú eres…</p>
+    <div class="gender-grid">
+      <div class="gender-card" onclick="pickGender(this)">
+        <div class="gender-img-wrap">
+          <img src="imgs/hombre.png" alt="Hombre" onerror="this.style.display='none'">
+        </div>
+        <div class="gender-label">Hombre</div>
+      </div>
+      <div class="gender-card" onclick="pickGender(this)">
+        <div class="gender-img-wrap">
+          <img src="imgs/mujer.png" alt="Mujer" onerror="this.style.display='none'">
+        </div>
+        <div class="gender-label">Mujer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 2 — Idade ══ -->
+  <div class="step" id="step-2">
+    <p class="q-title">¿Cuál es tu edad?</p>
+    <button class="opt" onclick="pickOpt(this,3)">18–24</button>
+    <button class="opt" onclick="pickOpt(this,3)">25–34</button>
+    <button class="opt" onclick="pickOpt(this,3)">35–44</button>
+    <button class="opt" onclick="pickOpt(this,3)">45+</button>
+  </div>
+
+  <!-- ══ STEP 3 — Dinheiro ══ -->
+  <div class="step" id="step-3">
+    <p class="q-title">Cuando el dinero entra en tu vida, ¿qué sucede inmediatamente después?</p>
+    <button class="opt" onclick="pickOpt(this,4)"><span class="opt-emoji">📖</span>Siempre aparece una prueba o un gasto inesperado</button>
+    <button class="opt" onclick="pickOpt(this,4)"><span class="opt-emoji">🕯️</span>Desaparece sin que logre entender cómo</button>
+    <button class="opt" onclick="pickOpt(this,4)"><span class="opt-emoji">🙌</span>Permanece intacto, pero siento miedo de usarlo</button>
+    <button class="opt" onclick="pickOpt(this,4)"><span class="opt-emoji">🙏</span>Se multiplica de manera natural y armoniosa</button>
+  </div>
+
+  <!-- ══ STEP 4 — Lei da Atração ══ -->
+  <div class="step" id="step-4">
+    <p class="q-title">¿Ya intentaste la Ley de la Atracción, el pensamiento positivo o la manifestación?</p>
+    <button class="opt" onclick="pickOpt(this,5)">Sí, varias veces y NUNCA funcionó bien</button>
+    <button class="opt" onclick="pickOpt(this,5)">Lo intenté, pero los resultados fueron temporales</button>
+    <button class="opt" onclick="pickOpt(this,5)">Nunca lo intenté seriamente</button>
+    <button class="opt" onclick="pickOpt(this,5)">Funcionó perfectamente para mí</button>
+  </div>
+
+  <!-- ══ STEP 5 — Comparação ══ -->
+  <div class="step" id="step-5">
+    <p class="q-title" style="margin-bottom:10px">¿Alguna vez te has preguntado:</p>
+    <p class="q-quote">"¿Por qué alguien que trabaja menos tiene más que yo?"</p>
+    <button class="opt" onclick="pickOpt(this,6)">Sí, eso me frustra profundamente</button>
+    <button class="opt" onclick="pickOpt(this,6)">A veces pienso en eso</button>
+    <button class="opt" onclick="pickOpt(this,6)">Rara vez</button>
+    <button class="opt" onclick="pickOpt(this,6)">Nunca</button>
+  </div>
+
+  <!-- ══ STEP 6 — Transição: Frequências ══ -->
+  <div class="step" id="step-6">
+    <div class="trans-step-inner">
+      <div class="trans-img-wrap">
+        <img src="imgs/frecuencias.png" alt="" onerror="this.style.display='none'">
+      </div>
+      <p class="trans-text">
+        Esa persona probablemente conoce <span class="gold">frecuencias</span> que tú no conoces.
+      </p>
+      <div class="trans-spacer"></div>
+      <div class="trans-btn-area">
+        <button class="btn" onclick="goTo(7)">Seguir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 7 — Pensamentos sobre dinheiro ══ -->
+  <div class="step" id="step-7">
+    <p class="q-title">Cuando pienso en tener mucho dinero, yo…</p>
+    <button class="opt" onclick="pickOpt(this,8)"><span class="opt-emoji">😐</span>Siento que no lo merezco o que no soy capaz</button>
+    <button class="opt" onclick="pickOpt(this,8)"><span class="opt-emoji">😤</span>Me pongo ansioso(a) y tengo miedo de perderlo</button>
+    <button class="opt" onclick="pickOpt(this,8)"><span class="opt-emoji">😢</span>Me siento culpable por desearlo</button>
+    <button class="opt" onclick="pickOpt(this,8)"><span class="opt-emoji">😔</span>Sé que es mío por derecho</button>
+  </div>
+
+  <!-- ══ STEP 8 — Transição: Bloqueio ══ -->
+  <div class="step" id="step-8">
+    <div class="trans-step-inner">
+      <div class="alert-red">¡Tu respuesta revela tu bloqueo principal!</div>
+      <div class="trans-img-wrap">
+        <img src="imgs/bloqueo.png" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="trans-spacer"></div>
+      <div class="trans-btn-area">
+        <button class="btn" onclick="goTo(9)">Seguir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 9 — Salmo proibido ══ -->
+  <div class="step" id="step-9">
+    <p class="q-title">¿Y si te dijera que una oración del salmo prohibido puede cambiar tu realidad financiera en 40 días? Tú…</p>
+    <button class="opt" onclick="pickOpt(this,10)"><span class="opt-emoji">😁</span>La intentarías de inmediato</button>
+    <button class="opt" onclick="pickOpt(this,10)"><span class="opt-emoji">😏</span>Sentirías mucha curiosidad por saber más</button>
+    <button class="opt" onclick="pickOpt(this,10)"><span class="opt-emoji">✨</span>Necesitarías entender primero cómo funciona</button>
+  </div>
+
+  <!-- ══ STEP 10 — Maior desejo ══ -->
+  <div class="step" id="step-10">
+    <p class="q-title">¿Cuál es tu mayor deseo en este momento?</p>
+    <button class="opt" onclick="pickOpt(this,11)">Pagar todas mis deudas</button>
+    <button class="opt" onclick="pickOpt(this,11)">Tener un fondo de emergencia</button>
+    <button class="opt" onclick="pickOpt(this,11)">Alcanzar la libertad financiera</button>
+    <button class="opt" onclick="pickOpt(this,11)">Ayudar a mi familia</button>
+  </div>
+
+  <!-- ══ STEP 11 — Transição: Palavras ══ -->
+  <div class="step" id="step-11">
+    <div class="trans-step-inner">
+      <div class="trans-img-wrap">
+        <img src="imgs/palabras.png" alt="" onerror="this.style.display='none'">
+      </div>
+      <p class="trans-text">
+        Las <span class="gold">palabras</span> se ajustan a tu deseo específico…
+      </p>
+      <div class="trans-spacer"></div>
+      <div class="trans-btn-area">
+        <button class="btn" onclick="goTo(12)">Seguir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 12 — Seleção múltipla ══ -->
+  <div class="step" id="step-12">
+    <p class="q-title">Marca lo que más deseas manifestar en los próximos 30 días:</p>
+    <p style="color:var(--mid);font-size:13px;font-weight:600;text-align:center;margin-bottom:16px">(Selección múltiple)</p>
+    <div class="multi-grid">
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Abundancia financiera</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Paz interior</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Alegría</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Motivación</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Confianza</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Relaciones saludables</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Propósito</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Gratitud</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Claridad mental</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Pensamientos positivos</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Salud física</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Enfoque</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Evolución personal</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Productividad</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Manifestación de deseos</span></div>
+      <div class="chk" onclick="toggleChk(this)"><div class="chk-box"><span class="chk-mark">✓</span></div><span class="chk-lbl">Paciencia</span></div>
+    </div>
+    <button class="btn" onclick="goTo(13)">Seguir</button>
+  </div>
+
+  <!-- ══ STEP 13 — Compromisso ══ -->
+  <div class="step" id="step-13">
+    <p class="warning">
+      <span class="warning-label">Aviso:</span> las palabras tienen conciencia propia; pueden volverse contra quien las utiliza con mala intención.
+    </p>
+    <div class="trans-img-wrap" style="aspect-ratio:4/3;margin-bottom:18px">
+      <img src="imgs/pergamino.png" alt="" onerror="this.style.display='none'">
+    </div>
+    <p class="q-title">¿Te comprometes a usar este poder únicamente con propósitos nobles?</p>
+    <button class="opt-arrow" onclick="goTo(14)">
+      <span>🙏 Sí, me comprometo completamente</span>
+      <span class="arrow-icon">›</span>
+    </button>
+    <button class="opt-arrow" onclick="goTo(14)">
+      <span>✋✋ No puedo garantizarlo</span>
+      <span class="arrow-icon">›</span>
+    </button>
+  </div>
+
+  <!-- ══ STEP 14 — CTA final ══ -->
+  <div class="step" id="step-14">
+    <div class="final-wrap">
+      <div class="final-icon">✨</div>
+      <p class="final-title">Tus respuestas han sido analizadas</p>
+      <div class="final-divider"></div>
+      <p class="final-sub">
+        Estás listo(a) para recibir las palabras del salmo.<br>
+        La prosperidad que mereces te está esperando.
+      </p>
+      <button class="btn-final" onclick="finalCTA()">
+        👉 Quiero Desbloquear la Abundancia
+      </button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  let current = 1;
+
+  function goTo(next) {
+    const cur = document.getElementById('step-' + current);
+    const el  = document.getElementById('step-' + next);
+    cur.classList.remove('active', 'visible');
+    current = next;
+    el.classList.add('active');
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function pickGender(card) {
+    document.querySelectorAll('.gender-card').forEach(c => c.classList.remove('picked'));
+    card.classList.add('picked');
+    setTimeout(() => goTo(2), 220);
+  }
+
+  function pickOpt(btn, next) {
+    btn.closest('.step').querySelectorAll('.opt').forEach(b => b.classList.remove('picked'));
+    btn.classList.add('picked');
+    setTimeout(() => goTo(next), 220);
+  }
+
+  function toggleChk(el) { el.classList.toggle('on'); }
+
+  function finalCTA() {
+    window.location.href = '#'; // substitua pela URL de destino
+  }
+
+  // Fade in inicial
+  document.addEventListener('DOMContentLoaded', () => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.getElementById('step-1').classList.add('visible');
+    }));
+  });
+</script>
+</body>
+</html>
